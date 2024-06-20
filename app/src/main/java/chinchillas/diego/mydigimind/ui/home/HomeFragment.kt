@@ -16,7 +16,7 @@ import chinchillas.diego.mydigimind.ui.Task
 
 class HomeFragment : Fragment() {
 
-    private var adaptador: adaptadorTareas? = null
+    private var adaptador: AdaptadorTareas? = null
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
             firts = false
         }
 
-        adaptador = adaptadorTareas(root.context, tasks)
+        adaptador = AdaptadorTareas(root.context, tasks)
 
         val gridView : GridView = root.findViewById(R.id.reminders)
 
@@ -64,10 +64,11 @@ class HomeFragment : Fragment() {
         tasks.add(Task("Practice 7", arrayListOf("Monday"), "12:00"))
     }
 
-    private class adaptadorTareas :BaseAdapter{
+    private class AdaptadorTareas: BaseAdapter{
         var tasks = ArrayList<Task>()
-        var contexto : Context? = null
-        constructor(context: Context, tasks: ArrayList<Task>){
+        var contexto: Context?= null
+
+        constructor(contexto: Context, tasks: ArrayList<Task>){
             this.contexto = contexto
             this.tasks = tasks
         }
@@ -86,16 +87,16 @@ class HomeFragment : Fragment() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var task = tasks[position]
-            var inflater = LayoutInflater.from(contexto)
-            var vista = inflater.inflate(R.layout.task_view, null)
+            var inflador = LayoutInflater.from(contexto)
+            var vista = inflador.inflate(R.layout.task_view, null)
 
-            var title : TextView = vista.findViewById(R.id.tv_title)
-            var time : TextView = vista.findViewById(R.id.tv_time)
-            var days : TextView = vista.findViewById(R.id.tv_days)
+            var tv_title: TextView = vista.findViewById(R.id.tv_title)
+            var tv_time: TextView = vista.findViewById(R.id.tv_time)
+            var tv_days: TextView = vista.findViewById(R.id.tv_days)
 
-            time.setText(task.time)
-            days.setText(task.days.toString())
-            title.setText(task.title)
+            tv_title.setText(task.title)
+            tv_time.setText(task.time)
+            tv_days.setText(task.days.toString())
 
             return vista
         }
